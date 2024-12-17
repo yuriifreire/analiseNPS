@@ -31,6 +31,9 @@ df['Classificação CSAT'] = df['CSAT'].apply(classificar_csat)
 #Exibir planilha classificada
 print(df)
 
+#Gerar planilha com resultado geral
+df.to_excel("classificacao_geral_nps_csat.xlsx", index=False)
+
 #Fazendo a separação de NPS por empresa
 nps_por_empresa = df.groupby('EMPRESA')['Classificação NPS'].value_counts()
 print(nps_por_empresa)
@@ -60,7 +63,13 @@ nota_nps_empresa = df.groupby('EMPRESA').apply(calcular_nps).reset_index()
 nota_nps_empresa.columns = ['EMPRESA', 'NPS']
 print(nota_nps_empresa)
 
+#Gerar planilha para NPS por empresa
+nota_nps_empresa.to_excel("nps_por_empresa.xlsx", index=False)
+
 #Passando a função do cálculo de CSAT por empresa
 nota_csat_empresa = df.groupby('EMPRESA').apply(calcular_csat).reset_index()
 nota_csat_empresa.columns = ['EMPRESA','CSAT']
 print(csat_por_empresa)
+
+#Gerar Planilha para CSAT por empresa
+nota_csat_empresa.to_excel("csat_por_empresa.xlsx", index=False)
