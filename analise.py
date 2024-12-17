@@ -30,3 +30,11 @@ df['Classificação CSAT'] = df['CSAT'].apply(classificar_csat)
 
 #exibir planilha classificada
 print(df)
+
+#Fazendo a separação de NPS por empresa
+nps_por_empresa = df.groupby('EMPRESA')['Classificação NPS'].value_counts()
+print(nps_por_empresa)
+
+#Fazendo a separação de CSAT por empresa
+csat_por_empresa = df.groupby('EMPRESA')['Classificação CSAT'].value_counts()
+print(csat_por_empresa)
