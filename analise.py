@@ -73,3 +73,34 @@ print(csat_por_empresa)
 
 #Gerar Planilha para CSAT por empresa
 nota_csat_empresa.to_excel("csat_por_empresa.xlsx", index=False)
+
+
+#Determinar a previsão com base no Indicador Combinado
+def previsao(indicador):
+    if indicador >= 75:
+        return "Previsão de se manter ou se tornar promotor"
+    elif 50 < indicador < 75:
+        return "Previsão de se manter neutro"
+    elif 0 < indicador <= 50:
+        return "Previsão de se tornar detrator"
+    else:
+        return "Previsão de ser um futuro CHURN"
+
+
+#Agrupar por cliente calculando o NPS, CSAT e o Indicador Combinado
+indicadores_por_empresa = df.groupby('EMPRESA').apply(
+    lambda grupo: pd.Series({
+        'NPS': calcular_nps(grupo),
+        'CSAT': calcular_csat(grupo),
+        'Indicador Combinado': (calcular_nps(grupo) + calcular_csat(grupo)) / 2,
+    })
+).reset_index()
+
+#Adicionando a coluna de previsão na planilha
+indicadores_por_empresa['Previsão'] = indicadores_por_empresa['Indicador Combinado'].apply(previsao)
+
+print(indicadores_por_empresa)
+
+#Gerar planilha com a previsão
+indicadores_por_empresa.to_excel("Previsao.xlsx", index=False)
+print("Arquivo Salvo: Previsao.xlsx")
