@@ -1,4 +1,6 @@
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 #Puxar a planilha
 planilha = "analiseDados.xlsx"
@@ -104,3 +106,45 @@ print(indicadores_por_empresa)
 #Gerar planilha com a previsão
 indicadores_por_empresa.to_excel("Previsao.xlsx", index=False)
 print("Arquivo Salvo: Previsao.xlsx")
+
+
+#Puxar os dados da planilha de previsao
+planilha_previsao = "Previsao.xlsx"
+df2 = pd.read_excel(planilha_previsao)
+
+#Ordenar o DF pelo "Indicador Combinado" em ordem decrescente
+df2 = df2.sort_values(by="Indicador Combinado", ascending=False)
+
+#Configurando o estilo do seaborn
+sns.set_style("whitegrid")
+
+#Tamanho do gráfico
+plt.figure(figsize=(12, 8))
+
+#Criar o gráfico de barras
+sns.barplot(
+    x="Indicador Combinado",
+    y="EMPRESA",
+    hue="Previsão",
+    data=df2,
+    dodge=False, #Remover a separação das barras por hue
+    palette="magma" #Definição da paleta de cores
+)
+
+#Configurando os rótulos e títulos
+plt.title("Indicador Combinado por Empresa e Previsão", fontsize=16)
+plt.xlabel("Indicador Combinado", fontsize=12)
+plt.ylabel("Empresas", fontsize=12)
+
+
+#Ajustando a legenda
+plt.legend(title="Previsão", bbox_to_anchor=(1.05, 1), loc="upper left")
+
+
+#Exibindo o gráfico
+plt.tight_layout()
+plt.show()
+
+
+#Salvando o gráfico gerado em imagem .png
+plt.savefig("previsao.png", dpi=300, bbox_inches='tight')
