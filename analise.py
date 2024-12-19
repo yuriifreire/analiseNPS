@@ -146,5 +146,40 @@ plt.tight_layout()
 plt.show()
 
 
-#Salvando o gráfico gerado em imagem .png
+#Salvando o gráfico de barras em imagem .png
 plt.savefig("previsao.png", dpi=300, bbox_inches='tight')
+
+
+#Criar gráfico de pontos
+pontos = sns.scatterplot(
+    y="Indicador Combinado",
+    x="EMPRESA",
+    hue="Previsão",
+    size="Indicador Combinado",
+    sizes=(50,300), #Definindo o tamanho dos pontos baseado no Indicador Combinado
+    palette="magma",
+    data=df2
+)
+
+#Adicionando faixas específicas
+plt.axhline(y=75, color='green', linestyle='--', label="75 (Promotor)")
+plt.axhline(y=50, color='orange', linestyle='--', label="50 (Neutro)")
+plt.axhline(y=0, color='red', linestyle='--', label="0 (Churn)")
+
+
+#Configurando os rótulos e títulos
+plt.title("Indicador Combinado por Empresa e Previsão", fontsize=16)
+plt.ylabel("Indicador Combinado", fontsize=12)
+plt.xlabel("Empresas", fontsize=12)
+
+
+#Ajustando a legenda
+plt.legend(title="Previsão", bbox_to_anchor=(1.05, 1), loc="upper left")
+
+
+#Exibindo o gráfico
+plt.tight_layout()
+plt.show()
+
+#Salvar o gráfico de pontos em imagem .png
+plt.savefig("previsaoPontos.png", dpi=300, bbox_inches='tight')
