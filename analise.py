@@ -86,7 +86,7 @@ def previsao(indicador):
     elif 0 < indicador <= 50:
         return "Previsão de se tornar detrator"
     else:
-        return "Previsão de ser um futuro Churn"
+        return "Previsão de ocorrer um futuro cancelamento"
 
 
 #Agrupar por cliente calculando o NPS, CSAT e o Indicador Combinado
